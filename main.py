@@ -3,7 +3,7 @@ from PIL import Image as im
 import numpy as np
 
 # Disable when running the waveshare panel
-DEBUG = True
+DEBUG = False
 
 if not DEBUG:
     from waveshare_epd import epd7in5_V2
