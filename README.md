@@ -5,7 +5,7 @@ Then you need to install the waveshare Python library from https://www.waveshare
 
 You'll need to install Pillow, Numpy and tqdm via Pip to run the script.
 
-Go inside the main.py and make sure that DEBUG is set to False, otherwise the script will try to show the render via Pillow, not via the eink panel.
+When you're ready to run, check that DEBUG is set to False inside main.py, otherwise the script will try to show the render via Pillow, not via the eink panel.
 
 Then simply run python3 main.py and you should get going!
 
