@@ -34,5 +34,4 @@ while True:
         epd.display(epd.getbuffer(image))
         epd.sleep()
 
-
     mandelbrot.zoom_on_interesting_area()

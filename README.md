@@ -3,7 +3,10 @@
 To run the script, first wire up the Raspberry Pi with a waveshare 7.5inch panel.
 Then you need to install the waveshare Python library from https://www.waveshare.com/wiki/7.5inch_e-Paper_HAT_Manual#Working_With_Raspberry_Pi and place the waveshare_epd folder inside this folder. If someone has a more seamless way of installing the eink driver I'd be keen to update it.
 
-You'll need to install Pillow, Numpy and tqdm via Pip to run the script.
+After installing the waveshare library, this should be sufficient to set up the rest of your environment:
+```
+pip install pillow numpy tqdm
+```
 
 When you're ready to run, check that DEBUG is set to False inside main.py, otherwise the script will try to show the render via Pillow, not via the eink panel.
 
