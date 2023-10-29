@@ -17,4 +17,6 @@ For the 7.5 waveshare panel, I'd recommend getting an 18x24cm frame (I got this 
 I cut a small slit on the side of the backpanel of the frame for the ribbon cable to go out of. I attached it to the header which comes with the Waveshare panel, and which goes directly on the Pi Zero. Those of you who are more gifted in building might be able to come up with an enclosure, but in my build the Pi is free-floating.
 
 To run the script in bootup on the Pi, I added the following line to /etc/rc.local:
+```
 sudo -H -u pi bash -c 'cd /home/pi/PiArtFrame && /usr/bin/python3 main.py'
+```
