@@ -20,8 +20,8 @@ class Mandelbrot:
             Z_x = Z_x * Z_x - Z_y * Z_y + C_x
             Z_y = 2 * Z_x_old * Z_y + C_y
             if (Z_x ** 2 + Z_y ** 2) > 4:
-                return 0
-        return 1
+                return 1
+        return 0
 
     def render(self, res_x, res_y):
         # Approximation for number of iterations
