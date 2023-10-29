@@ -17,7 +17,9 @@ if not DEBUG:
     epd.sleep()
 
 while True:
+    print("Starting render...")
     mandelbrot.render(800,480)
+    print("Done!")
     arr = mandelbrot.get_render()
     arr = (np.asarray(arr)*255).astype(np.uint8)
     image = im.fromarray(arr)

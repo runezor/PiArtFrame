@@ -1,5 +1,6 @@
 from decimal import *
 import random
+from tqdm import tqdm
 
 class Mandelbrot:
     def __init__(self, w = Decimal(4), h = Decimal(2), x = Decimal(-1), y = Decimal(0)):
@@ -31,7 +32,7 @@ class Mandelbrot:
 
         columns = []
 
-        for y_offset_i in range(res_y, 0, -1):
+        for y_offset_i in tqdm(range(res_y, 0, -1)):
             row = []
             for x_offset_i in range(0, res_x):
                 p_x = self.x - self.w / Decimal(2) + Decimal(x_offset_i) / Decimal(res_x) * self.w
