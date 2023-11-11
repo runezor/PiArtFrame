@@ -1,7 +1,7 @@
 # PiArtFrame
 
 To run the script, first wire up the Raspberry Pi with a waveshare 7.5inch panel.
-Then you need to install the waveshare Python library from https://www.waveshare.com/wiki/7.5inch_e-Paper_HAT_Manual#Working_With_Raspberry_Pi and place the waveshare_epd folder inside this folder. If someone has a more seamless way of installing the eink driver I'd be keen to update it.
+Then you need to install the waveshare Python library from https://www.waveshare.com/wiki/7.5inch_e-Paper_HAT_Manual#Working_With_Raspberry_Pi and place the waveshare_epd folder (found at found at e-Paper/RaspberryPi_JetsonNano/python/lib/waveshare_epd) inside this folder. If someone has a more seamless way of installing the eink driver I'd be keen to update it.
 
 After installing the waveshare library, this should be sufficient to set up the rest of your environment:
 ```
