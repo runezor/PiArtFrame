@@ -14,6 +14,9 @@ if not DEBUG:
 
 mandelbrot = Mandelbrot()
 
+# default height and width - need to hardcode for debug mode
+WIDTH = 800
+HEIGHT = 480
 if not DEBUG:
     try:
         epd = displayfactory.load_display_driver(DISPLAY_TYPE)
@@ -21,15 +24,16 @@ if not DEBUG:
         print(f"Couldn't find {DISPLAY_TYPE}")
         sys.exit()
 
+    WIDTH = epd.width
+    HEIGHT = epd.height
+
     epd.prepare()
     epd.clear()
     epd.sleep()
 
-print(epd.width)
-print(epd.height)
 while True:
     print("Starting render...")
-    mandelbrot.render(800,480)
+    mandelbrot.render(WIDTH,HEIGHT)
     print("Done!")
     arr = mandelbrot.get_render()
     arr = (np.asarray(arr)*255).astype(np.uint8)
