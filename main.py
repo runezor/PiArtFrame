@@ -1,21 +1,32 @@
 from mandelbrot import Mandelbrot
 from PIL import Image as im
 import numpy as np
+import sys
+
+# Set to the name of your e-ink device (https://github.com/robweber/omni-epd#displays-implemented)
+DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 
 # Disable when running the waveshare panel
 DEBUG = False
 
 if not DEBUG:
-    from waveshare_epd import epd7in5_V2
+    from omni_epd import displayfactory, EPDNotFoundError
 
 mandelbrot = Mandelbrot()
 
 if not DEBUG:
-    epd = epd7in5_V2.EPD()
-    epd.init()
-    epd.Clear()
+    try:
+        epd = displayfactory.load_display_driver(DISPLAY_TYPE)
+    except EPDNotFoundError:
+        print(f"Couldn't find {DISPLAY_TYPE}")
+        sys.exit()
+
+    epd.prepare()
+    epd.clear()
     epd.sleep()
 
+print(epd.width)
+print(epd.height)
 while True:
     print("Starting render...")
     mandelbrot.render(800,480)
@@ -29,9 +40,9 @@ while True:
     if DEBUG:
         image.show()
     else:
-        epd.init()
-        epd.Clear()
-        epd.display(epd.getbuffer(image))
+        epd.prepare()
+        epd.clear()
+        epd.display(image)
         epd.sleep()
 
     mandelbrot.zoom_on_interesting_area()
