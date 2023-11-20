@@ -1,14 +1,16 @@
 # PiArtFrame
 
-To run the script, first wire up the Raspberry Pi with a waveshare 7.5inch panel.
-Then you need to install the waveshare Python library from https://www.waveshare.com/wiki/7.5inch_e-Paper_HAT_Manual#Working_With_Raspberry_Pi and place the waveshare_epd folder (found at found at e-Paper/RaspberryPi_JetsonNano/python/lib/waveshare_epd) inside this folder. If someone has a more seamless way of installing the eink driver I'd be keen to update it.
+To run the script, first wire up the Raspberry Pi with an e-Ink panel.
 
-After installing the waveshare library, this should be sufficient to set up the rest of your environment:
-```
-pip install pillow numpy tqdm
-```
+Install the needed Python requirements with:
 
-When you're ready to run, check that DEBUG is set to False inside main.py, otherwise the script will try to show the render via Pillow, not via the eink panel.
+```
+pip install -r requirements.txt
+```
+When you're ready to run, check the following:
+
+1. Set the `DISPLAY_TYPE` variable to the type of e-ink panel you have. [Click here](https://github.com/robweber/omni-epd#displays-implemented) for a list of supported devices.
+2. Set the `DEBUG` flag to False inside main.py, otherwise the script will try to show the render via Pillow, not via the e-ink panel.
 
 Then simply run python3 main.py and you should get going!
 
