@@ -11,6 +11,7 @@ DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 # DEBUG = True display Mandelbrot image on Raspberry Pi monitor
 # i9 mod
 #
+
 DEBUG = False
 
 if not DEBUG:
