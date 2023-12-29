@@ -12,6 +12,7 @@ DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 # 12/28 04:32
 #
 #12/29
+#12/29 8:32
 
 DEBUG = False
 
