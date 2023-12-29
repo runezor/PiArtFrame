@@ -11,6 +11,7 @@ DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 # DEBUG = True display Mandelbrot image on Raspberry Pi monitor
 # 12/28 04:32
 #
+#
 DEBUG = False
 
 if not DEBUG:
