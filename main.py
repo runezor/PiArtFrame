@@ -10,6 +10,8 @@ DISPLAY_TYPE = "waveshare_epd.epd7in5_V2"
 # Disable when running the waveshare panel
 # DEBUG = True display Mandelbrot image on Raspberry Pi monitor
 # i9 mod
+#i7
+
 DEBUG = False
 
 if not DEBUG:
