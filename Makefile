@@ -2,14 +2,14 @@ DIR_Config	 = ./lib/waveshare/Config
 DIR_EPD		 = ./lib/waveshare/e-Paper
 DIR_FONTS	 = ./lib/waveshare/Fonts
 DIR_GUI		 = ./lib/waveshare/GUI
-DIR_Main 	 = ./
+DIR_Examples = ./lib/waveshare/Examples
 DIR_BIN		 = ./bin
 
 EPD = epd7in5V2
 OBJ_C_EPD = ${DIR_EPD}/EPD_7in5_V2.c
-OBJ_C_Examples = ${DIR_Main}/EPD_7in5_V2_test.c
+OBJ_C_Examples = ${DIR_Examples}/EPD_7in5_V2_test.c
 
-OBJ_C = $(wildcard ${OBJ_C_EPD} ${DIR_GUI}/*.c ${OBJ_C_Examples} ${DIR_Main}/main.c ${DIR_Main}/ImageData2.c ${DIR_Main}/ImageData.c ${DIR_FONTS}/*.c )
+OBJ_C = $(wildcard ${OBJ_C_EPD} ${DIR_GUI}/*.c ${OBJ_C_Examples} main.c ${DIR_Examples}/ImageData2.c ${DIR_Examples}/ImageData.c ${DIR_FONTS}/*.c )
 OBJ_O = $(patsubst %.c,${DIR_BIN}/%.o,$(notdir ${OBJ_C}))
 RPI_DEV_C = $(wildcard $(DIR_BIN)/dev_hardware_SPI.o $(DIR_BIN)/RPI_gpiod.o $(DIR_BIN)/DEV_Config.o )
 JETSON_DEV_C = $(wildcard $(DIR_BIN)/sysfs_software_spi.o $(DIR_BIN)/sysfs_gpio.o $(DIR_BIN)/DEV_Config.o )
@@ -63,7 +63,7 @@ JETSON_epd:${OBJ_O}
 
 $(shell mkdir -p $(DIR_BIN))
 
-${DIR_BIN}/%.o:$(DIR_Main)/%.c
+${DIR_BIN}/%.o:$(DIR_Examples)/%.c
 	$(CC) $(CFLAGS) -c	$< -o $@ -I $(DIR_Config) -I $(DIR_GUI) -I $(DIR_EPD) $(DEBUG)
 	
 ${DIR_BIN}/%.o:$(DIR_EPD)/%.c
