@@ -10,7 +10,7 @@ EPD = epd7in5V2
 OBJ_C_EPD = ${DIR_EPD}/EPD_7in5_V2.c
 OBJ_C_Examples = ${DIR_Examples}/EPD_7in5_V2_test.c
 
-OBJ_C = $(wildcard ${OBJ_C_EPD} ${DIR_GUI}/*.c ${OBJ_C_Examples} ${DIR_Examples}/ImageData2.c ${DIR_Examples}/ImageData.c ${DIR_FONTS}/*.c ${DIR_Main}/*.c)
+OBJ_C = $(wildcard ${OBJ_C_EPD} ${DIR_GUI}/*.c ${OBJ_C_Examples} ${DIR_Examples}/ImageData2.c ${DIR_Examples}/ImageData.c ${DIR_FONTS}/*.c ${DIR_Main}/*.c*)
 OBJ_O = $(patsubst %.c,${DIR_BIN}/%.o,$(notdir ${OBJ_C}))
 RPI_DEV_C = $(wildcard $(DIR_BIN)/dev_hardware_SPI.o $(DIR_BIN)/RPI_gpiod.o $(DIR_BIN)/DEV_Config.o )
 JETSON_DEV_C = $(wildcard $(DIR_BIN)/sysfs_software_spi.o $(DIR_BIN)/sysfs_gpio.o $(DIR_BIN)/DEV_Config.o )
@@ -78,6 +78,9 @@ ${DIR_BIN}/%.o:$(DIR_GUI)/%.c
 
 ${DIR_BIN}/%.o:$(DIR_Main)/%.c
 	$(CC) $(CFLAGS) -c	$< -o $@ -I $(DIR_Examples) -I $(DIR_Config) -I $(DIR_GUI) -I $(DIR_Main) -I $(DIR_EPD) $(DEBUG)
+
+${DIR_BIN}/%.o:$(DIR_Main)/%.cpp
+	$(CC) $(CFLAGS) -c	$< -o $@ -I $(DIR_Examples) -I $(DIR_Config) -I $(DIR_GUI) -I $(DIR_Main) -I $(DIR_EPD) $(DEBUG)	
 
 RPI_DEV:
 	$(CC) $(CFLAGS) $(DEBUG_RPI) -c	 $(DIR_Config)/dev_hardware_SPI.c -o $(DIR_BIN)/dev_hardware_SPI.o $(LIB_RPI) $(DEBUG)

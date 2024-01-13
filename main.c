@@ -4,7 +4,7 @@
 #include "EPD_7in5_V2.h"
 #include <time.h>
 
-#include "mandelbrot.h"
+#include "mandelbrot.hpp"
 
 void  Handler(int signo)
 {
@@ -45,9 +45,9 @@ int main(void)
     Paint_NewImage(img, EPD_7IN5_V2_WIDTH, EPD_7IN5_V2_HEIGHT, 0, WHITE);
     Paint_SelectImage(img);
 
-    MandelbrotSetData dataSet;
-    InitMandelbrotSetData(dataSet);
-    dataSet.rendered = img;
+    MandelbrotSet mandelbrotSet;
+    mandelbrotSet.InitMandelbrotSet();
+    mandelbrotSet.rendered = img;
 
     int pixelCtr = 0;
     UBYTE pixelColor = WHITE;
