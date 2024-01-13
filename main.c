@@ -47,7 +47,7 @@ int main(void)
 
     MandelbrotSet mandelbrot;
     mandelbrot.InitMandelbrotSet();
-    mandelbrot.rendered = img;
+    mandelbrot.SetRender(img);
 
     mandelbrot.Render(EPD_7IN5_V2_WIDTH, EPD_7IN5_V2_HEIGHT);
 
