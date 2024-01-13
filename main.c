@@ -3,8 +3,11 @@
 #include "EPD_Test.h"   //Examples
 #include "EPD_7in5_V2.h"
 #include <time.h>
+#include <iostream>
 
 #include "mandelbrot.hpp"
+
+using namespace std;
 
 void  Handler(int signo)
 {
@@ -49,8 +52,14 @@ int main(void)
     mandelbrot.InitMandelbrotSet();
     mandelbrot.SetRender(img);
 
-    mandelbrot.Render(EPD_7IN5_V2_WIDTH, EPD_7IN5_V2_HEIGHT);
-    EPD_7IN5_V2_Display(img);
+    while(true)
+    {
+        cout << "Starting render..." << endl;
+        mandelbrot.Render(EPD_7IN5_V2_WIDTH, EPD_7IN5_V2_HEIGHT);
+        cout << "Render complete!" << endl;
+        EPD_7IN5_V2_Display(img);
+        mandelbrot.ZoomOnInterestingArea();
+    }
     return 0;
 
     // Alternate pixels test code
