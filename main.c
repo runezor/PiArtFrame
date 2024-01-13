@@ -26,25 +26,37 @@ int main(void)
     printf("e-Paper Init and Clear...\r\n");
     EPD_7IN5_V2_Init();
 
-    struct timespec start={0,0}, finish={0,0}; 
-    //clock_gettime(CLOCK_REALTIME,&start);
     EPD_7IN5_V2_Clear();
-    //clock_gettime(CLOCK_REALTIME,&finish);
-    //printf("%ld S\r\n",finish.tv_sec-start.tv_sec);
+
     DEV_Delay_ms(500);
 
-
-
+    // Compute image size 
     UWORD Imagesize = ((EPD_7IN5_V2_WIDTH % 8 == 0)? (EPD_7IN5_V2_WIDTH / 8 ): (EPD_7IN5_V2_WIDTH / 8 + 1)) * EPD_7IN5_V2_HEIGHT;
+    UBYTE* img = NULL;
 
-    UBYTE* img = malloc(Imagesize*sizeof(UWORD));
-    for(int i = 0; i < Imagesize*sizeof(UWORD); ++i)
+    // Allocate memory for image
+    if((img = (UBYTE *)malloc(Imagesize)) == NULL) {
+        printf("Failed to apply for image memory...\r\n");
+        return -1;
+    }
+    printf("Paint_NewImage\r\n");
+    Paint_NewImage(img, EPD_7IN5_V2_WIDTH, EPD_7IN5_V2_HEIGHT, 0, WHITE);
+    Paint_SelectImage(img);
+
+    int pixelCtr = 0;
+    UBYTE pixelColor = WHITE;
+    for(int i = 0; i < EPD_7IN5_V2_WIDTH; ++i)
     {
-        if(i%2 == 0)
-            img[i] = 1;
-        else
-            img[i] = 0;
+        pixelColor = ~pixelColor;
 
+        for(int j = 0; j < EPD_7IN5_V2_HEIGHT; ++j)
+        {
+            UBYTE selectedPixelColor = pixelColor;
+            if(pixelCtr % 2 == 0)
+                selectedPixelColor = ~pixelColor;
+            Paint_SetPixel(i, j, selectedPixelColor);
+            pixelCtr++;
+        }
     }
 
    EPD_7IN5_V2_Display(img);
