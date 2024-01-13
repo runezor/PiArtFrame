@@ -49,7 +49,7 @@ DEBUG_JETSONI = -D $(USELIB_JETSONI) -D JETSON
 RPI:RPI_DEV RPI_epd 
 JETSON: JETSON_DEV JETSON_epd
 
-TARGET = epd
+TARGET = piArtFrame
 CC = gcc
 MSG = -g -O -ffunction-sections -fdata-sections -Wall
 CFLAGS += $(MSG) -D $(EPD)
