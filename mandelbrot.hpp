@@ -8,13 +8,12 @@ public:
     void Render(UWORD xResolution, UWORD yResolution);
     void SetRender(UBYTE* image);
     UBYTE* GetRender() { return rendered; };
+    void ZoomOnInterestingArea();
 
 private:
     bool IsMandelPoint(double x, double y, int iterations);
-    void ZoomOnInterestingArea();
-    int GetUniformnessOfArea(double fW, double fH, int xOffset, int yOffset, int wDiv, int hDiv);
+    unsigned int GetUniformnessOfArea(double fW, double fH, int xOffset, int yOffset, int wDiv, int hDiv);
     bool IsAreaUniform(int xOffset, int yOffset, double fW, double fH,  int wDiv, int hDiv, double wStart, double hStart);
-
 
     UBYTE* rendered;
     double w;
