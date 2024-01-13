@@ -94,7 +94,7 @@ void DEV_HARDWARE_SPI_begin(char *SPI_device)
     }
     tr.bits_per_word = bits;
     
-    DEV_HARDWARE_SPI_Mode(SPI_MODE_0);
+    DEV_HARDWARE_SPI_Mode(static_cast<SPIMode>(SPI_MODE_0));
     DEV_HARDWARE_SPI_ChipSelect(SPI_CS_Mode_LOW);
     DEV_HARDWARE_SPI_SetBitOrder(SPI_BIT_ORDER_LSBFIRST);
     DEV_HARDWARE_SPI_setSpeed(20000000);

@@ -4,6 +4,8 @@
 #include "EPD_7in5_V2.h"
 #include <time.h>
 
+#include "mandelbrot.h"
+
 void  Handler(int signo)
 {
     //System Exit
@@ -42,6 +44,10 @@ int main(void)
     printf("Paint_NewImage\r\n");
     Paint_NewImage(img, EPD_7IN5_V2_WIDTH, EPD_7IN5_V2_HEIGHT, 0, WHITE);
     Paint_SelectImage(img);
+
+    MandelbrotSetData dataSet;
+    InitMandelbrotSetData(dataSet);
+    dataSet.rendered = img;
 
     int pixelCtr = 0;
     UBYTE pixelColor = WHITE;

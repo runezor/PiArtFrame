@@ -50,7 +50,7 @@ RPI:RPI_DEV RPI_epd
 JETSON: JETSON_DEV JETSON_epd
 
 TARGET = piArtFrame
-CC = gcc
+CC = g++
 MSG = -g -O -ffunction-sections -fdata-sections -Wall
 CFLAGS += $(MSG) -D $(EPD)
 
