@@ -50,7 +50,10 @@ int main(void)
     mandelbrot.SetRender(img);
 
     mandelbrot.Render(EPD_7IN5_V2_WIDTH, EPD_7IN5_V2_HEIGHT);
+    EPD_7IN5_V2_Display(img);
+    return 0;
 
+    // Alternate pixels test code
     int pixelCtr = 0;
     UBYTE pixelColor = WHITE;
     for(int i = 0; i < EPD_7IN5_V2_WIDTH; ++i)

@@ -187,6 +187,7 @@ void Paint_SetRotate(UWORD Rotate);
 void Paint_SetMirroring(UBYTE mirror);
 void Paint_SetPixel(UWORD Xpoint, UWORD Ypoint, UWORD Color);
 void Paint_SetScale(UBYTE scale);
+UBYTE Paint_GetPixel(UWORD Xpoint, UWORD Ypoint);
 
 void Paint_Clear(UWORD Color);
 void Paint_ClearWindows(UWORD Xstart, UWORD Ystart, UWORD Xend, UWORD Yend, UWORD Color);

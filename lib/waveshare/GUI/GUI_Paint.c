@@ -258,6 +258,13 @@ void Paint_SetPixel(UWORD Xpoint, UWORD Ypoint, UWORD Color)
 	}
 }
 
+UBYTE Paint_GetPixel(UWORD Xpoint, UWORD Ypoint)
+{
+    UDOUBLE Addr = Xpoint / 8 + Ypoint * Paint.WidthByte;
+    return Paint.Image[Addr];
+}
+
+
 /******************************************************************************
 function: Clear the color of the picture
 parameter:
