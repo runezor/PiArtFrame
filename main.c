@@ -45,9 +45,11 @@ int main(void)
     Paint_NewImage(img, EPD_7IN5_V2_WIDTH, EPD_7IN5_V2_HEIGHT, 0, WHITE);
     Paint_SelectImage(img);
 
-    MandelbrotSet mandelbrotSet;
-    mandelbrotSet.InitMandelbrotSet();
-    mandelbrotSet.rendered = img;
+    MandelbrotSet mandelbrot;
+    mandelbrot.InitMandelbrotSet();
+    mandelbrot.rendered = img;
+
+    mandelbrot.Render(EPD_7IN5_V2_WIDTH, EPD_7IN5_V2_HEIGHT);
 
     int pixelCtr = 0;
     UBYTE pixelColor = WHITE;

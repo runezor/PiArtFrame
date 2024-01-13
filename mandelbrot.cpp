@@ -3,9 +3,9 @@
 
 void MandelbrotSet::InitMandelbrotSet()
 {
-    w = 0;
-    h = 0;
-    x = 0;
+    w = 4;
+    h = 2;
+    x = -1;
     y = 0;
     rendered = NULL;
     renderedResX = 0;
