@@ -12,4 +12,5 @@ typedef struct MandelbrotSetData
     UWORD renderedResY;
 } MandelbrotSetData;
 
+void InitMandelbrotSetData(MandelbrotSetData setData);
 void Render(MandelbrotSetData setData, UWORD xResolution, UWORD yResolution);
