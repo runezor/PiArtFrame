@@ -1,5 +1,8 @@
 #include "mandelbrot.hpp"
+#include "GUI_Paint.h"
+#include <algorithm>
 #include <cmath>
+#include <vector>
 
 using namespace std;
 void MandelbrotSet::InitMandelbrotSet()
@@ -20,6 +23,39 @@ void MandelbrotSet::SetRender(UBYTE* image)
 
 void MandelbrotSet::Render(UWORD xResolution, UWORD yResolution)
 {
+    // Approximation for number of iterations
+    int iter = (50 + max(0.0, -log10(w)) * 100 );
+    vector<vector<bool>> columns;
+    vector<bool> rows;
+
+    for(int i = yResolution-1; i>=0; --i)
+    {
+        for(int j = 0; j < xResolution; ++j)
+        {
+            double p_x = this->x - this->w / 2.0 + j / xResolution * this->w;
+            double p_y = this->y - this->h / 2.0 + j / yResolution * this->h;
+            rows.emplace_back(IsMandelPoint(p_x, p_y, iter));
+        }
+        columns.emplace_back(rows);
+        rows.clear();
+    }
+
+    renderedResX = xResolution;
+    renderedResY = yResolution;
+
+    // Update rendered image
+    for(unsigned int y = columns.size() - 1; y >=0; --y)
+    {
+        auto row = columns[y];
+        for(unsigned int x = 0; x < row.size(); ++x)
+        {
+            auto bitSet = row[x];
+            if(bitSet)
+                Paint_SetPixel(x, y, BLACK);
+            else
+                Paint_SetPixel(x, y, WHITE);
+        }
+    }
 
 }
 
