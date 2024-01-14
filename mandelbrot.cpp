@@ -62,7 +62,6 @@ void MandelbrotSet::Render(UWORD xResolution, UWORD yResolution)
             }
         }
     }
-
 }
 
 bool MandelbrotSet::IsMandelPoint(double fX, double fY, int iterations)
@@ -84,9 +83,9 @@ bool MandelbrotSet::IsMandelPoint(double fX, double fY, int iterations)
     return false;
 }
 
-unsigned int MandelbrotSet::GetUniformnessOfArea(double fW, double fH, int xOffset, int yOffset, int wDiv, int hDiv)
+unsigned long long MandelbrotSet::GetUniformnessOfArea(double fW, double fH, int xOffset, int yOffset, int wDiv, int hDiv)
 {
-    unsigned int uniformness = 0;
+    unsigned long long uniformness = 0;
     for(int wStart = 0; wStart < wDiv; ++wStart)
     {
         for(int hStart = 0; hStart < hDiv; ++hStart)
@@ -112,7 +111,7 @@ bool MandelbrotSet::IsAreaUniform(int xOffset, int yOffset, double fW, double fH
         for(unsigned int j = 0; j < static_cast<unsigned int>(fH / hDiv); ++j )
         {
             int yTest = yOffset + static_cast<int>(fH / hDiv) * hStart + j;
-            int xTest = xOffset + static_cast<int>(fW / wDiv) * wStart;
+            int xTest = xOffset + static_cast<int>(fW / wDiv) * wStart + i;
             auto testPoint = Paint_GetPixel(xTest , yTest);
             if(testPoint != firstPoint)
                 return false;
@@ -123,57 +122,59 @@ bool MandelbrotSet::IsAreaUniform(int xOffset, int yOffset, double fW, double fH
 }
 
 void MandelbrotSet::ZoomOnInterestingArea()
-{
-    tuple<double, double, unsigned int> choice;
-    vector<tuple<double, double, unsigned int>> choices;
+{   
+    tuple<double, double, unsigned long long> choice;
+    vector<tuple<double, double, unsigned long long>> choices;
 
     auto uniformness = GetUniformnessOfArea(this->renderedResX / 2, this->renderedResY / 2, 0, 0, 2, 2);
-    choice = {this->x - this->w/4, this->y+this->h/4, uniformness};
+    choice = {this->x - this->w/4, this->y + this->h/4, uniformness};
+
     choices.emplace_back(choice);
 
     uniformness = GetUniformnessOfArea(this->renderedResX / 2, this->renderedResY / 2, this->renderedResX / 2, 0, 2, 2);
-    choice = {this->x - this->w/4, this->y+this->h/4, uniformness};
+    choice = {this->x + this->w/4, this->y + this->h/4, uniformness};
+
     choices.emplace_back(choice);
 
     uniformness = GetUniformnessOfArea(this->renderedResX / 2, this->renderedResY / 2, 0, this->renderedResY / 2, 2, 2);
-    choice = {this->x - this->w/4, this->y+this->h/4, uniformness};
+    choice = {this->x - this->w/4, this->y - this->h/4, uniformness};
     choices.emplace_back(choice);
 
     uniformness = GetUniformnessOfArea(this->renderedResX / 2, this->renderedResY / 2, this->renderedResX / 2, this->renderedResY / 2, 2, 2);
-    choice = {this->x - this->w/4, this->y+this->h/4, uniformness};
+    choice = {this->x + this->w/4, this->y - this->h/4, uniformness};
     choices.emplace_back(choice);     
 
-    w = w / 2;       
-    h = h / 2;
+    w = w / 2.0;
+    h = h / 2.0;
 
     choices.erase(std::remove_if(
         choices.begin(),
         choices.end(),
-        [](const tuple<double, double, unsigned int>& x) { 
-            return (std::get<unsigned int>(x) >= 5); 
+        [](const tuple<double, double, unsigned long long>& x) { 
+            return (std::get<unsigned long long>(x) >= 4); 
         }), choices.end());
 
     auto lessUniformChoices = choices;
     lessUniformChoices.erase(std::remove_if(
         lessUniformChoices.begin(),
         lessUniformChoices.end(),
-        [](const tuple<double, double, unsigned int>& x) { 
-            return (std::get<unsigned int>(x) >= 4); 
+        [](const tuple<double, double, unsigned long long>& x) { 
+            return (std::get<unsigned long long>(x) >= 3); 
         }), lessUniformChoices.end());
     
     if(lessUniformChoices.size() > 0)
     {
             random_shuffle(lessUniformChoices.begin(), lessUniformChoices.end());
             auto selection = lessUniformChoices[0];
-            x = get<0>(selection);
-            y = get<1>(selection);
+            this->x = get<0>(selection);
+            this->y = get<1>(selection);
     }
     else
     {
             random_shuffle(choices.begin(), choices.end());
             auto selection = choices[0];
-            x = get<0>(selection);
-            y = get<1>(selection);
+            this->x = get<0>(selection);
+            this->y = get<1>(selection);
     }
 }
 

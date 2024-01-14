@@ -12,7 +12,7 @@ public:
 
 private:
     bool IsMandelPoint(double x, double y, int iterations);
-    unsigned int GetUniformnessOfArea(double fW, double fH, int xOffset, int yOffset, int wDiv, int hDiv);
+    unsigned long long GetUniformnessOfArea(double fW, double fH, int xOffset, int yOffset, int wDiv, int hDiv);
     bool IsAreaUniform(int xOffset, int yOffset, double fW, double fH,  int wDiv, int hDiv, double wStart, double hStart);
 
     UBYTE* rendered;
