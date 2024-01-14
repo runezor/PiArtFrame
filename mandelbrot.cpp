@@ -5,6 +5,7 @@
 #include <vector>
 #include <tuple>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 void MandelbrotSet::InitMandelbrotSet()
@@ -34,8 +35,8 @@ void MandelbrotSet::Render(UWORD xResolution, UWORD yResolution)
         vector<bool> rows;
         for(int j = 0; j < xResolution; ++j)
         {
-            double p_x = this->x - this->w / 2.0 + j / (double)xResolution * this->w;
-            double p_y = this->y - this->h / 2.0 + i / (double)yResolution * this->h;
+            double p_x = this->x - this->w / 2.0 + (double)j / (double)xResolution * this->w;
+            double p_y = this->y - this->h / 2.0 + (double)(i+1) / (double)yResolution * this->h;
             rows.emplace_back(IsMandelPoint(p_x, p_y, iter));
         }
         columns.emplace_back(rows);
@@ -53,27 +54,29 @@ void MandelbrotSet::Render(UWORD xResolution, UWORD yResolution)
             auto bitSet = row[x];
             if(bitSet)
             {
-                Paint_SetPixel(x, y, BLACK);
+                Paint_SetPixel(x, y, WHITE);
             }
             else
             {
-                Paint_SetPixel(x, y, WHITE);
+                Paint_SetPixel(x, y, BLACK);
             }
         }
     }
 
 }
 
-bool MandelbrotSet::IsMandelPoint(double x, double y, int iterations)
+bool MandelbrotSet::IsMandelPoint(double fX, double fY, int iterations)
 {
-    double z_x = x;
-    double z_y = y;
+    double z_x = fX;
+    double z_y = fY;
+
     for(int i = 0; i < iterations; ++i)
     {
-        int z_x_old = z_x;
-        z_x = z_x * z_x - z_y * z_y + x;
-        z_y = 2 * z_x_old * z_y + y;
-        if ((pow(z_x, 2) + pow(z_y, 2)) > 4)
+        double z_x_old = z_x;
+        z_x = z_x * z_x - z_y * z_y + fX;
+        z_y = 2.0 * z_x_old * z_y + fY;
+        auto sumSquared = pow(z_x, 2) + pow(z_y, 2);
+        if (sumSquared > 4)
         {
             return true;
         }
