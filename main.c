@@ -4,11 +4,14 @@
 #include "EPD_7in5_V2.h"
 #include <time.h>
 #include <iostream>
+#include <chrono>
 
 #include "mandelbrot.hpp"
 
 using namespace std;
+using namespace chrono;
 
+static constexpr unsigned long SecondsBetweenImages = 60*1; 
 void  Handler(int signo)
 {
     //System Exit
@@ -28,11 +31,8 @@ int main(void)
         return -1;
     }
 
-    printf("e-Paper Init and Clear...\r\n");
+    printf("e-Paper Init...\r\n");
     EPD_7IN5_V2_Init();
-
-    EPD_7IN5_V2_Clear();
-
     DEV_Delay_ms(500);
 
     // Compute image size 
@@ -52,41 +52,33 @@ int main(void)
     mandelbrot.InitMandelbrotSet();
     mandelbrot.SetRender(img);
 
+    bool isFirstImage = true;
     while(true)
     {
+        steady_clock::time_point beforeRender = steady_clock::now();
         cout << "Starting render..." << endl;
         mandelbrot.Render(EPD_7IN5_V2_WIDTH, EPD_7IN5_V2_HEIGHT);
         cout << "Render complete!" << endl;
+        steady_clock::time_point afterRender = steady_clock::now();
+        
+        if(isFirstImage)
+        {
+            isFirstImage = false;
+        }
+        else
+        {
+            while(duration_cast<std::chrono::seconds>(afterRender - beforeRender).count() < SecondsBetweenImages)
+            {
+                sleep(5);
+                afterRender = steady_clock::now();
+            }
+        }
+
+        EPD_7IN5_V2_Clear();
         EPD_7IN5_V2_Display(img);
         mandelbrot.ZoomOnInterestingArea();
-    }
-    return 0;
 
-    // Alternate pixels test code
-    int pixelCtr = 0;
-    UBYTE pixelColor = WHITE;
-    for(int i = 0; i < EPD_7IN5_V2_WIDTH; ++i)
-    {
-        pixelColor = ~pixelColor;
-
-        for(int j = 0; j < EPD_7IN5_V2_HEIGHT; ++j)
-        {
-            UBYTE selectedPixelColor = pixelColor;
-            if(pixelCtr % 2 == 0)
-                selectedPixelColor = ~pixelColor;
-            Paint_SetPixel(i, j, selectedPixelColor);
-            pixelCtr++;
-        }
     }
 
-   EPD_7IN5_V2_Display(img);
-#if epd7in5V2
-    //EPD_7in5_V2_test();
-#else
-    printf("Please specify the EPD model when making. \r\n");
-    printf("Example: When you run the EPD_7in5_V2_test() program, input: sudo make clean && make EPD=epd7in5V2 \r\n");
-    printf("Don't know which program you need to run? Refer to the user manual (Wiki) and main.c \r\n");
-#endif
-    
     return 0;
 }
