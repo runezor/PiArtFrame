@@ -28,10 +28,10 @@ void MandelbrotSet::Render(UWORD xResolution, UWORD yResolution)
     // Approximation for number of iterations
     int iter = (50 + max(0.0, -log10(w)) * 100 );
     vector<vector<bool>> columns;
-    vector<bool> rows;
 
     for(int i = yResolution-1; i>=0; --i)
     {
+        vector<bool> rows;
         for(int j = 0; j < xResolution; ++j)
         {
             double p_x = this->x - this->w / 2.0 + j / (double)xResolution * this->w;
@@ -39,7 +39,6 @@ void MandelbrotSet::Render(UWORD xResolution, UWORD yResolution)
             rows.emplace_back(IsMandelPoint(p_x, p_y, iter));
         }
         columns.emplace_back(rows);
-        rows.clear();
     }
 
     renderedResX = xResolution;
