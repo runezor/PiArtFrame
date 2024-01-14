@@ -6,6 +6,7 @@
 #include <tuple>
 #include <iostream>
 #include <fstream>
+#include <random>
 
 using namespace std;
 void MandelbrotSet::InitMandelbrotSet()
@@ -162,16 +163,20 @@ void MandelbrotSet::ZoomOnInterestingArea()
             return (std::get<unsigned long long>(x) >= 3); 
         }), lessUniformChoices.end());
     
+    // Seed
+    random_device rd;
+    mt19937 g(rd());
+
     if(lessUniformChoices.size() > 0)
     {
-            random_shuffle(lessUniformChoices.begin(), lessUniformChoices.end());
+            shuffle(lessUniformChoices.begin(), lessUniformChoices.end(), g);
             auto selection = lessUniformChoices[0];
             this->x = get<0>(selection);
             this->y = get<1>(selection);
     }
     else
     {
-            random_shuffle(choices.begin(), choices.end());
+            shuffle(choices.begin(), choices.end(), g);
             auto selection = choices[0];
             this->x = get<0>(selection);
             this->y = get<1>(selection);
