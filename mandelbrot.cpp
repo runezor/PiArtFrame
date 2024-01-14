@@ -26,7 +26,7 @@ void MandelbrotSet::SetRender(UBYTE* image)
 void MandelbrotSet::Render(UWORD xResolution, UWORD yResolution)
 {
     // Approximation for number of iterations
-    int iter = (50 + max(0.0, log10(w)) * 100 );
+    int iter = (50 + max(0.0, -log10(w)) * 100 );
     vector<vector<bool>> columns;
     vector<bool> rows;
 
